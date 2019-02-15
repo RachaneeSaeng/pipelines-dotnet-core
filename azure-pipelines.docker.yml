@@ -24,3 +24,5 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+   
+- script: dotnet --info
