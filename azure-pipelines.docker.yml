@@ -15,7 +15,7 @@ steps:
   displayName: 'Build and Run Unit Tests'
 
 - task: PublishTestResults@2
-  displayName: 'Publish Test Result'
+  displayName: 'Collect Test Result'
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
