@@ -24,7 +24,7 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
-    failOnStandardError: 'true'
+    failTaskOnFailedTests: true
    
 - script: dotnet --info
 
