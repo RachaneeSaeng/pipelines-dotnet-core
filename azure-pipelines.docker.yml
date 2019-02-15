@@ -12,19 +12,20 @@ steps:
 - script: |
     dotnet build --configuration $(buildConfiguration)
     dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx
+  displayName: 'Build and Run Unit Tests'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Result'
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+    failTaskOnFailedTests: true
+    
+- script: |  
     dotnet publish --configuration $(buildConfiguration) --output out
     docker build -f Dockerfile -t $(dockerId)/$(imageName) .
     docker login -u $(dockerId) -p $pswd
     docker push $(dockerId)/$(imageName)
   env:
     pswd: $(dockerPassword)
-
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
-    failTaskOnFailedTests: true
-   
-- script: dotnet --info
-
+  displayName: 'Publish and Push to Docker'
