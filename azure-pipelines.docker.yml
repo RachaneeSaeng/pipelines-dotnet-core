@@ -28,4 +28,4 @@ steps:
     docker push $(dockerId)/$(imageName)
   env:
     pswd: $(dockerPassword)
-  displayName: 'Publish and Push to Docker'
+  displayName: 'Push to Docker'
