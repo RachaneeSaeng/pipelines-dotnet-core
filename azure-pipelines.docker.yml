@@ -5,7 +5,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  imageName: 'dotnetcore:$(Build.BuildId)'
+  imageName: 'dotnetcore:$(version)'
   # define two more variables dockerId and dockerPassword in the build pipeline in UI
 
 steps:
@@ -29,3 +29,12 @@ steps:
   env:
     pswd: $(dockerPassword)
   displayName: 'Push to Docker'
+
+- script: sed -i 's/:latest/:$(version)/g'  azure-deployment.kubernetes.yml
+  displayName: 'Change version number in deployment file'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish deployment file'
+  inputs:
+    PathtoPublish: 'azure-deployment.kubernetes.yml'
+    ArtifactName: K8SYml
