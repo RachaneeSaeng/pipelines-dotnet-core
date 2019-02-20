@@ -31,7 +31,7 @@ steps:
   displayName: 'Push to Docker'
 
 - script: sed -i 's/:latest/:$(version)/g'  azure-deployment.kubernetes.yml
-  displayName: 'Change version number in azure-deployment.kubernetes.yml'
+  displayName: 'Change version number in deployment file'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish deployment file'
