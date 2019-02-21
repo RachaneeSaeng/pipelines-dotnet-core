@@ -13,10 +13,10 @@ steps:
     dotnet build --configuration $(buildConfiguration)
     dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx
     dotnet publish --configuration $(buildConfiguration) --output out
-  displayName: 'Build & Test & Publish'
+  displayName: 'Dotnet | Build & Test & Publish'
   
 - task: PublishTestResults@2
-  displayName: 'Collect Test Result'
+  displayName: 'Dotnet | Collect Test Result'
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
@@ -28,13 +28,13 @@ steps:
     docker push $(dockerId)/$(imageName)
   env:
     pswd: $(dockerPassword)
-  displayName: 'Push to Docker'
+  displayName: 'Docker | Push to Docker'
 
-- script: sed -i 's/:builtVersion/:$(version)/g'  pipeline/azure-deployment.kubernetes.yml
-  displayName: 'Change version number in deployment file'
+- script: sed -i 's/BuildNumber/$(version)/g' pipeline/helm/values.yml
+  displayName: 'Helm | Update build number'
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish deployment file'
+  displayName: 'Helm | Publish helm related files'
   inputs:
-    PathtoPublish: 'pipeline/azure-deployment.kubernetes.yml'
-    ArtifactName: K8SYml
+    PathtoPublish: 'pipeline/helm'
+    ArtifactName: allcharts

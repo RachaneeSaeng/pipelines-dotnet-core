@@ -12,11 +12,11 @@ spec:
   template:
     metadata:
       labels:
-        app: dotnetapp
+        app: dotnetappa
     spec:
       containers:
       - name: dotnetapp
-        image: zzplezz/dotnetcore:builtVersion
+        image: zzplezz/dotnetcore:{{.Values.buildNumber}}
         ports:
         - containerPort: 80
 ---
