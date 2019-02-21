@@ -37,4 +37,4 @@ steps:
   displayName: 'Helm | Publish helm related files'
   inputs:
     PathtoPublish: 'pipeline/helm'
-    ArtifactName: allcharts
+    ArtifactName: helm
