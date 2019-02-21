@@ -30,11 +30,11 @@ steps:
     pswd: $(dockerPassword)
   displayName: 'Push to Docker'
 
-- script: sed -i 's/:latest/:$(version)/g'  azure-deployment.kubernetes.yml
+- script: sed -i 's/:builtVersion/:$(version)/g'  pipeline/azure-deployment.kubernetes.yml
   displayName: 'Change version number in deployment file'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish deployment file'
   inputs:
-    PathtoPublish: 'azure-deployment.kubernetes.yml'
+    PathtoPublish: 'pipeline/azure-deployment.kubernetes.yml'
     ArtifactName: K8SYml

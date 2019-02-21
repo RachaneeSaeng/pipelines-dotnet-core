@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: dotnetapp
-        image: zzplezz/dotnetcore:latest
+        image: zzplezz/dotnetcore:builtVersion
         ports:
         - containerPort: 80
 ---
