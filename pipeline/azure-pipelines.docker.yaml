@@ -3,14 +3,12 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
-variables:
-  buildConfiguration: 'Release'
+variables:  
   version: 0.0.2
-  buildNumber: '$(version):$(Build.BuildId)'
-  imageName: 'dotnetcore:$(buildNumber)'
+  buildTag: '$(version):$(Build.BuildId)'
+  imageName: 'dotnetcore:$(buildTag)'
+  buildConfiguration: 'Release'
   # define two more variables dockerId and dockerPassword in the build pipeline in UI
-
-name: $(buildNumber)_$(Date:yyyyMMdd)$(Rev:.r)
 
 steps:
 - script: |
@@ -34,8 +32,10 @@ steps:
     pswd: $(dockerPassword)
   displayName: 'Docker | Push to Docker'
 
-- script: sed -i 's/BuildNumber/$(buildNumber)/g' pipeline/coreapi-service/values.yaml
-  displayName: 'Helm | Update build number'
+- script: |
+    sed -i 's/VERSION/$(version)/g' pipeline/coreapi-service/Chart.yaml
+    sed -i 's/BUILDTAG/$(buildTag)/g' pipeline/coreapi-service/values.yaml
+  displayName: 'Helm | Change version in helm files'
 
 - task: HelmInstaller@0
   displayName: 'Helm | Install'
