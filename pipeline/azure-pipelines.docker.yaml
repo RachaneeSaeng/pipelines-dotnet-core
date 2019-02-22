@@ -46,7 +46,7 @@ steps:
   displayName: 'Helm | Package'
   inputs:
     command: package
-    chartPath: 'pipeline/coreapi-service'
+    chartPath: 'pipeline/coreapi'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Helm | Publish Artifact'
