@@ -33,8 +33,8 @@ steps:
 - script: sed -i 's/BuildNumber/$(version)/g' pipeline/helm/values.yaml
   displayName: 'Helm | Update build number'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Helm | Publish helm related files'
+- task: HelmDeploy@0
+  displayName: 'Helm | Package'
   inputs:
-    PathtoPublish: 'pipeline/helm'
-    ArtifactName: helm
+    command: package
+    chartPath: 'pipeline/helm'
