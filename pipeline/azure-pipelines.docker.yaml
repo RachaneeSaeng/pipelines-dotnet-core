@@ -33,6 +33,9 @@ steps:
 - script: sed -i 's/BuildNumber/$(version)/g' pipeline/coreapi-service/values.yaml
   displayName: 'Helm | Update build number'
 
+- task: HelmInstaller@0
+  displayName: 'Helm | Install'
+
 - task: HelmDeploy@0
   displayName: 'Helm | Package'
   inputs:
