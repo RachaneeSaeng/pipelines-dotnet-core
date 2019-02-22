@@ -1,1 +1,2 @@
+# buildTag is app version number:buildId, used as dockker image tag
 buildTag: BUILDTAG

@@ -1,21 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dotnetapp-deployment
+  name: {{.Chart.Name}}-{{.Release.Name}}-deployment
   labels:
-    app: dotnetapp
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/name: {{.Chart.Name}}   
+    app.kubernetes.io/instance: {{.Release.Name}}    
+    helm.sh/chart: {{.Chart.Name}}-{{ .Chart.Version \| replace "+" "_" }}    
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dotnetapp
+      app.kubernetes.io/name: {{.Chart.Name}}
   template:
     metadata:
       labels:
-        app: dotnetapp
+        app.kubernetes.io/name: {{.Chart.Name}}
     spec:
       containers:
-      - name: dotnetapp
-        image: zzplezz/dotnetcore:{{.Values.buildNumber}}
+      - name: {{.Chart.Name}}
+        image: zzplezz/{{.Chart.Name}}:{{.Values.buildTag}}
         ports:
         - containerPort: 80

@@ -4,9 +4,10 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 variables:  
+  appName: 'coreapi'
   version: 0.0.2
   buildTag: '$(version):$(Build.BuildId)'
-  imageName: 'dotnetcore:$(buildTag)'
+  imageName: '$(appName):$(buildTag)'
   buildConfiguration: 'Release'
   # define two more variables dockerId and dockerPassword in the build pipeline in UI
 
@@ -33,6 +34,7 @@ steps:
   displayName: 'Docker | Push to Docker'
 
 - script: |
+    sed -i 's/APPNAME/$(appName)/g' pipeline/coreapi-service/Chart.yaml
     sed -i 's/VERSION/$(version)/g' pipeline/coreapi-service/Chart.yaml
     sed -i 's/BUILDTAG/$(buildTag)/g' pipeline/coreapi-service/values.yaml
   displayName: 'Helm | Change version in helm files'
