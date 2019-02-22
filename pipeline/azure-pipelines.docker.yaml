@@ -30,7 +30,7 @@ steps:
     pswd: $(dockerPassword)
   displayName: 'Docker | Push to Docker'
 
-- script: sed -i 's/BuildNumber/$(version)/g' pipeline/helm/values.yml
+- script: sed -i 's/BuildNumber/$(version)/g' pipeline/helm/values.yaml
   displayName: 'Helm | Update build number'
 
 - task: PublishBuildArtifacts@1
