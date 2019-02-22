@@ -1,2 +1,3 @@
 # buildId is used as dockker image tag
 buildId: BUILDID
+buildNumber: BUILDNUMBER

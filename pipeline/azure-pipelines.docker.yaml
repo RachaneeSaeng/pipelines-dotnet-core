@@ -36,6 +36,7 @@ steps:
     sed -i 's/APPNAME/$(appName)/g' pipeline/coreapi/Chart.yaml
     sed -i 's/VERSION/$(version)/g' pipeline/coreapi/Chart.yaml
     sed -i 's/BUILDID/$(Build.BuildId)/g' pipeline/coreapi/values.yaml
+    sed -i 's/BUILDNUMBER/$(Build.BuildNumber)/g' pipeline/coreapi/values.yaml
   displayName: 'Helm | Change version in helm files'
 
 - task: HelmInstaller@0
