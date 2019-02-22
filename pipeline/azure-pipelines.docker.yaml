@@ -5,7 +5,7 @@ pool:
 
 variables:  
   appName: 'coreapi'
-  version: 0.0.5
+  version: 0.0.6
   imageName: '$(appName):$(version)-$(Build.BuildId)'
   buildConfiguration: 'Release'
   # define two more variables dockerId and dockerPassword in the build pipeline in UI

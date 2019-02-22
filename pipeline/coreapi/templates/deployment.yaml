@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/component: backend
     app.kubernetes.io/name: {{.Chart.Name}}   
-    app.kubernetes.io/instance: {{.Values.buildNumber}}
+    app.kubernetes.io/instance: '{{.Values.buildNumber}}'
 spec:
   replicas: 1
   selector:
