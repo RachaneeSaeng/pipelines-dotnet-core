@@ -41,3 +41,8 @@ steps:
   inputs:
     command: package
     chartPath: 'pipeline/coreapi-service'
+
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish Pipeline Artifact'
+  inputs:
+    targetPath: 'deployment-package'
