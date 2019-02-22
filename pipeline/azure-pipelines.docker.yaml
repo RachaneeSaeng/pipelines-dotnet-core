@@ -5,7 +5,7 @@ pool:
 
 variables:  
   appName: 'coreapi'
-  version: 0.0.2
+  version: 0.0.3
   buildTag: '$(version)-$(Build.BuildId)'
   imageName: '$(appName):$(buildTag)'
   buildConfiguration: 'Release'
