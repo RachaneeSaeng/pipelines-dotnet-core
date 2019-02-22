@@ -41,4 +41,8 @@ steps:
   inputs:
     command: package
     chartPath: 'pipeline/coreapi-service'
-    destination: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Helm | Publish Artifact'
+  inputs:
+    ArtifactName: 'deployment-package'
