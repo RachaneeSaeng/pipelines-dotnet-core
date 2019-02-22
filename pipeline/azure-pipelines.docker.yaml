@@ -34,9 +34,9 @@ steps:
   displayName: 'Docker | Push to Docker'
 
 - script: |
-    sed -i 's/APPNAME/$(appName)/g' pipeline/coreapi-service/Chart.yaml
-    sed -i 's/VERSION/$(version)/g' pipeline/coreapi-service/Chart.yaml
-    sed -i 's/BUILDTAG/$(buildTag)/g' pipeline/coreapi-service/values.yaml
+    sed -i 's/APPNAME/$(appName)/g' pipeline/coreapi/Chart.yaml
+    sed -i 's/VERSION/$(version)/g' pipeline/coreapi/Chart.yaml
+    sed -i 's/BUILDTAG/$(buildTag)/g' pipeline/coreapi/values.yaml
   displayName: 'Helm | Change version in helm files'
 
 - task: HelmInstaller@0
