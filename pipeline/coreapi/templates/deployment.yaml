@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: '{{.Chart.Name}}-{{.Release.Name}}_deployment'
+  name: '{{.Chart.Name}}-{{.Values.buildTag}}_deployment'
   labels:
     app.kubernetes.io/component: backend
     app.kubernetes.io/name: {{.Chart.Name}}   
