@@ -1,12 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: '{{.Chart.Name}}-{{.Values.buildTag}}_deployment'
+  name: '{{.Chart.Name}}-{{.Values.buildTag}}-deployment'
   labels:
     app.kubernetes.io/component: backend
     app.kubernetes.io/name: {{.Chart.Name}}   
-    app.kubernetes.io/instance: {{.Release.Name}}    
-    helm.sh/chart: '{{.Chart.Name}}-{{.Chart.Version}}'    
+    app.kubernetes.io/instance: {{.Release.Name}}      
 spec:
   replicas: 1
   selector:
