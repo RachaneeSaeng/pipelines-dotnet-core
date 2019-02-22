@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: '{{.Chart.Name}}-{{.Values.buildTag}}-deployment'
+  name: '{{.Chart.Name}}-{{.Values.buildId}}-deployment'
   labels:
     app.kubernetes.io/component: backend
     app.kubernetes.io/name: {{.Chart.Name}}   
@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: {{.Chart.Name}}
-        image: zzplezz/{{.Chart.Name}}:{{.Values.buildTag}}
+        image: zzplezz/{{.Chart.Name}}:{{.Chart.Version}}-{{.Values.buildId}}
         ports:
         - containerPort: 80
