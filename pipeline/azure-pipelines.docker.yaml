@@ -5,8 +5,12 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  imageName: 'dotnetcore:$(version)'
+  version: 0.0.2
+  buildNumber: '$(version):$(BuildID)'
+  imageName: 'dotnetcore:$(buildNumber)'
   # define two more variables dockerId and dockerPassword in the build pipeline in UI
+
+name: $(buildNumber)_$(Date:yyyyMMdd)$(Rev:.r)
 
 steps:
 - script: |
@@ -30,7 +34,7 @@ steps:
     pswd: $(dockerPassword)
   displayName: 'Docker | Push to Docker'
 
-- script: sed -i 's/BuildNumber/$(version)/g' pipeline/coreapi-service/values.yaml
+- script: sed -i 's/BuildNumber/$(buildNumber)/g' pipeline/coreapi-service/values.yaml
   displayName: 'Helm | Update build number'
 
 - task: HelmInstaller@0
