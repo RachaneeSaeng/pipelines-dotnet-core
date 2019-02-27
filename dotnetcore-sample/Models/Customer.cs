@@ -11,5 +11,7 @@ namespace dotnetcore_sample.Models
         public string CompanyName { get; set; }
         public string ContactName { get; set; }
         public string Phone { get; set; }
+        public int? Age { get; set; }
+        public int? Score { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace dotnetcoresample.Migrations
 {
-    public partial class Initialization : Migration
+    public partial class Initialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
