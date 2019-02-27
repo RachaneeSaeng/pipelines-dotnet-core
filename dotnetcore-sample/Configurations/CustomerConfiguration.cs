@@ -24,6 +24,8 @@ namespace dotnetcore_sample.Configurations
             builder.Property(e => e.ContactName).HasMaxLength(30);         
 
             builder.Property(e => e.Phone).HasMaxLength(24);
+
+            builder.Property(e => e.Address).HasMaxLength(150);         
         }
     }
 }

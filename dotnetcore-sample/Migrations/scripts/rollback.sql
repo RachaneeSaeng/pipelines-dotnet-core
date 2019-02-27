@@ -45,30 +45,45 @@ END;
 
 GO
 
-IF EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227031125_AddScore')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227031125_AddScore')
 BEGIN
-    UPDATE dbo.Customers SET Age = Score
+    ALTER TABLE [Customers] ADD [Score] int NULL;
 END;
 
 GO
 
-IF EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227031125_AddScore')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227031125_AddScore')
+BEGIN
+    UPDATE dbo.Customers SET Score = Age
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227031125_AddScore')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20190227031125_AddScore', N'2.2.2-servicing-10034');
+END;
+
+GO
+
+IF EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227062639_AddAddress')
 BEGIN
     DECLARE @var0 sysname;
     SELECT @var0 = [d].[name]
     FROM [sys].[default_constraints] [d]
     INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Customers]') AND [c].[name] = N'Score');
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Customers]') AND [c].[name] = N'Address');
     IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Customers] DROP CONSTRAINT [' + @var0 + '];');
-    ALTER TABLE [Customers] DROP COLUMN [Score];
+    ALTER TABLE [Customers] DROP COLUMN [Address];
 END;
 
 GO
 
-IF EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227031125_AddScore')
+IF EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227062639_AddAddress')
 BEGIN
     DELETE FROM [__EFMigrationsHistory]
-    WHERE [MigrationId] = N'20190227031125_AddScore';
+      WHERE [MigrationId] = N'20190227062639_AddAddress';
 END;
 
 GO
