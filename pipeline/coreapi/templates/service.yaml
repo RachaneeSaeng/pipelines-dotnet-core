@@ -3,12 +3,15 @@ kind: Service
 metadata:
   name: '{{.Chart.Name}}-service'
   labels:
-    app.kubernetes.io/component: backend
-    app.kubernetes.io/name: {{.Chart.Name}}   
-    app.kubernetes.io/instance: {{.Values.buildNumber | quote}}
+    component: backend
+    name: {{.Chart.Name}}
+    helm.sh/chart: '{{.Chart.Name}}-{{.Chart.Version}}'  
+    instance: {{.Values.buildNumber | quote}} 
+    release/name: {{.Release.Name}}  
+    release/revision: {{.Release.Revision}} 
 spec:
   type: LoadBalancer
   ports:
   - port: 80
   selector:
-    app.kubernetes.io/name: {{.Chart.Name}}
+    name: {{.Chart.Name}}
