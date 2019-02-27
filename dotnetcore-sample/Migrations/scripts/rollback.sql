@@ -67,23 +67,38 @@ END;
 
 GO
 
-IF EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227062639_AddAddress')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227062639_AddAddress')
+BEGIN
+    ALTER TABLE [Customers] ADD [Address] nvarchar(150) NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227062639_AddAddress')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20190227062639_AddAddress', N'2.2.2-servicing-10034');
+END;
+
+GO
+
+IF EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227073358_AddName')
 BEGIN
     DECLARE @var0 sysname;
     SELECT @var0 = [d].[name]
     FROM [sys].[default_constraints] [d]
     INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Customers]') AND [c].[name] = N'Address');
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Customers]') AND [c].[name] = N'Name');
     IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Customers] DROP CONSTRAINT [' + @var0 + '];');
-    ALTER TABLE [Customers] DROP COLUMN [Address];
+    ALTER TABLE [Customers] DROP COLUMN [Name];
 END;
 
 GO
 
-IF EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227062639_AddAddress')
+IF EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227073358_AddName')
 BEGIN
     DELETE FROM [__EFMigrationsHistory]
-      WHERE [MigrationId] = N'20190227062639_AddAddress';
+    WHERE [MigrationId] = N'20190227073358_AddName';
 END;
 
 GO
