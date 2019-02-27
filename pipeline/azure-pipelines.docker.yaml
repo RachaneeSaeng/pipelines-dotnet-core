@@ -23,7 +23,13 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
     failTaskOnFailedTests: true
-    
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Dotnet | Publish migration scripts'
+  inputs:
+    PathtoPublish: dotnetcore-sample/Migrations/*.sql
+    ArtifactName: Migrations
+
 - script: |      
     docker build -f Dockerfile -t $(dockerId)/$(imageName) .
     docker login -u $(dockerId) -p $pswd
