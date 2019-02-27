@@ -29,8 +29,9 @@ namespace dotnetcore_sample
                           .AddJsonFile($"appsettings.Local.json", optional: true, reloadOnChange: true)
                           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
                     config.AddEnvironmentVariables();
-                })                
-                .UseStartup<Startup>();
+                })
+                .UseStartup<Startup>()
+                .UseApplicationInsights();
         }            
     }
 }
