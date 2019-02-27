@@ -45,3 +45,25 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227031125_AddScore')
+BEGIN
+    ALTER TABLE [Customers] ADD [Score] int NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227031125_AddScore')
+BEGIN
+    UPDATE dbo.Customers SET Score = Age
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20190227031125_AddScore')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20190227031125_AddScore', N'2.2.2-servicing-10034');
+END;
+
+GO
+
