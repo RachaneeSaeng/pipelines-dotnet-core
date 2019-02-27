@@ -8,7 +8,7 @@ metadata:
     helm.sh/chart: '{{.Chart.Name}}-{{.Chart.Version}}'  
     instance: {{.Values.buildNumber | quote}} 
     release/name: {{.Release.Name}}  
-    release/revision: {{.Release.Revision}}
+    release/revision: {{.Release.Revision | quote}} 
 spec:
   replicas: 1
   selector:
