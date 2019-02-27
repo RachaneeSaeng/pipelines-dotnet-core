@@ -27,7 +27,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Dotnet | Publish migration scripts'
   inputs:
-    PathtoPublish: dotnetcore-sample/Migrations/*.sql
+    PathtoPublish: dotnetcore-sample/Migrations/scripts
     ArtifactName: Migrations
 
 - script: |      
