@@ -4,7 +4,6 @@ metadata:
   name: '{{.Chart.Name}}-service'
   labels:
     component: backend
-    name: {{.Chart.Name}}
     helm.sh/chart: '{{.Chart.Name}}-{{.Chart.Version}}'  
     instance: {{.Values.buildNumber | quote}} 
     release/name: {{.Release.Name}}  
@@ -14,4 +13,4 @@ spec:
   ports:
   - port: 80
   selector:
-    name: {{.Chart.Name}}
+    app: {{.Chart.Name}}

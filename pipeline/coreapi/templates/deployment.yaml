@@ -4,7 +4,7 @@ metadata:
   name: '{{.Chart.Name}}-deployment'
   labels:
     component: backend
-    name: {{.Chart.Name}}
+    app: {{.Chart.Name}}
     helm.sh/chart: '{{.Chart.Name}}-{{.Chart.Version}}'  
     instance: {{.Values.buildNumber | quote}} 
     release/name: {{.Release.Name}}  
@@ -13,11 +13,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: {{.Chart.Name}}
+      app: {{.Chart.Name}}
   template:
     metadata:
       labels:
-        name: {{.Chart.Name}}
+        app: {{.Chart.Name}}
     spec:
       containers:
       - name: {{.Chart.Name}}
