@@ -28,7 +28,7 @@ steps:
   displayName: 'Dotnet | Publish migration scripts'
   inputs:
     PathtoPublish: dotnetcore-sample/Migrations/scripts
-    ArtifactName: Migrations
+    ArtifactName: db-migrations
 
 - script: |      
     docker build -f Dockerfile -t $(dockerId)/$(imageName) .
@@ -57,4 +57,4 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Helm | Publish Artifact'
   inputs:
-    ArtifactName: 'deployment-package'
+    ArtifactName: 'helm-deployment'
