@@ -1,17 +1,17 @@
 ﻿{
-  "x-generator": "NSwag v12.0.14.0 (NJsonSchema v9.13.18.0 (Newtonsoft.Json v10.0.0.0))",
+  "x-generator": "NSwag v12.0.14.0 (NJsonSchema v9.13.18.0 (Newtonsoft.Json v11.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "Dotnet Sample API",
     "version": "1.0.0"
   },
   "paths": {
-    "/api/Home/Get/{id}": {
+    "/api/Api/Get/{id}": {
       "get": {
         "tags": [
-          "Home"
+          "Api"
         ],
-        "operationId": "Home_Get",
+        "operationId": "Api_Get",
         "parameters": [
           {
             "name": "id",
@@ -36,86 +36,6 @@
                       "$ref": "#/components/schemas/CustomerDetailModel"
                     }
                   ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Home/Index": {
-      "get": {
-        "tags": [
-          "Home"
-        ],
-        "operationId": "Home_Index",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "file"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Home/About": {
-      "get": {
-        "tags": [
-          "Home"
-        ],
-        "operationId": "Home_About",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "file"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Home/Contact": {
-      "get": {
-        "tags": [
-          "Home"
-        ],
-        "operationId": "Home_Contact",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "file"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Home/Error": {
-      "get": {
-        "tags": [
-          "Home"
-        ],
-        "operationId": "Home_Error",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "file"
                 }
               }
             }
