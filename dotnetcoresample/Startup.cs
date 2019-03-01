@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using System.Reflection;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using dotnetcoresample.Customers.Queries.GetCustomerDetail;
+using MediatR;
 
 namespace dotnetcoresample
 {
@@ -38,6 +40,9 @@ namespace dotnetcoresample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var x = typeof(GetCustomerDetailQueryHandler).GetTypeInfo().Assembly;
+            services.AddMediatR(typeof(GetCustomerDetailQueryHandler).GetTypeInfo().Assembly);
+
             // Add DbContext using SQL Server Provider
             services.AddDbContext<DotNetSampleDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MyFirstAzureDatabase")));
@@ -63,6 +68,12 @@ namespace dotnetcoresample
             }
 
             app.UseStaticFiles();
+
+            app.UseSwaggerUi3(settings =>
+            {
+                settings.Path = "/api";
+                settings.DocumentPath = "/api/specification.json";
+            });
 
             app.UseMvc(routes =>
             {
