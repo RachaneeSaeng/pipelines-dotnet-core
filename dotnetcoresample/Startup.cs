@@ -11,7 +11,7 @@ using System.Reflection;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 
-namespace dotnetcore_sample
+namespace dotnetcoresample
 {
     public class Startup
     {

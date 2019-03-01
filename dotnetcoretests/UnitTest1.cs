@@ -1,9 +1,9 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using dotnetcore_sample.Controllers; 
+using dotnetcoresample.Controllers; 
 
-namespace dotnetcore_tests
+namespace dotnetcoretests
 {
     [TestClass]
     public class UnitTest1

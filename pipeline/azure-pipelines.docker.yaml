@@ -13,7 +13,7 @@ variables:
 steps:
 - script: |
     dotnet build --configuration $(buildConfiguration)
-    dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx
+    dotnet test dotnetcoretests --configuration $(buildConfiguration) --logger trx
     dotnet publish --configuration $(buildConfiguration) --output out
   displayName: 'Dotnet | Build & Test & Publish'
   
@@ -27,7 +27,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Dotnet | Publish migration scripts'
   inputs:
-    PathtoPublish: dotnetcore-sample/Migrations/scripts
+    PathtoPublish: dotnetcoresample/Migrations/scripts
     ArtifactName: db-migrations
 
 - script: |      

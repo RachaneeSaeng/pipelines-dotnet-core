@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace dotnetcore_sample.Models
+namespace dotnetcoresample.Models
 {
     public class Customer
     {

@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetcore-sample", "dotnetcore-sample\dotnetcore-sample.csproj", "{E49391CB-8539-4F40-8B83-05FB6214B1B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetcoresample", "dotnetcoresample\dotnetcoresample.csproj", "{E49391CB-8539-4F40-8B83-05FB6214B1B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnetcore-tests", "dotnetcore-tests\dotnetcore-tests.csproj", "{36163D65-CA2D-4BBB-B3FE-93185AF130D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetcoretests", "dotnetcoretests\dotnetcoretests.csproj", "{36163D65-CA2D-4BBB-B3FE-93185AF130D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F618F525-B653-4105-9378-C3C0A34B722D}
 	EndGlobalSection
 EndGlobal

@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using dotnetcore_sample;
+using dotnetcoresample;
 
 namespace dotnetcoresample.Migrations
 {
     [DbContext(typeof(DotNetSampleDbContext))]
-    [Migration("20190227025450_AddAge")]
-    partial class AddAge
+    partial class DotNetSampleDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,11 +19,14 @@ namespace dotnetcoresample.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("dotnetcore_sample.Models.Customer", b =>
+            modelBuilder.Entity("dotnetcoresample.Models.Customer", b =>
                 {
                     b.Property<string>("CustomerId")
                         .HasColumnName("CustomerID")
                         .HasMaxLength(5);
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(150);
 
                     b.Property<int?>("Age");
 
@@ -36,8 +37,12 @@ namespace dotnetcoresample.Migrations
                     b.Property<string>("ContactName")
                         .HasMaxLength(30);
 
+                    b.Property<string>("Name");
+
                     b.Property<string>("Phone")
                         .HasMaxLength(24);
+
+                    b.Property<int?>("Score");
 
                     b.HasKey("CustomerId");
 

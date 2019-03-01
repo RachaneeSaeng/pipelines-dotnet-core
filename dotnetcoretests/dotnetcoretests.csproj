@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\dotnetcore-sample\dotnetcore-sample.csproj" />
+    <ProjectReference Include="..\dotnetcoresample\dotnetcoresample.csproj" />
   </ItemGroup>
 
   <ItemGroup>

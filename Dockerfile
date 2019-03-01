@@ -9,6 +9,6 @@ FROM microsoft/aspnetcore:2.0
 WORKDIR /app
 
 # Copy files from the artifact staging folder on agent
-COPY dotnetcore-sample/out .
+COPY dotnetcoresample/out .
 
-ENTRYPOINT ["dotnet", "dotnetcore-sample.dll"]
+ENTRYPOINT ["dotnet", "dotnetcoresample.dll"]

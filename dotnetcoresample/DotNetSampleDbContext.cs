@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using dotnetcore_sample.Models;
+using dotnetcoresample.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace dotnetcore_sample
+namespace dotnetcoresample
 {
     public class DotNetSampleDbContext : DbContext
     {

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using dotnetcore_sample;
+using dotnetcoresample;
 
 namespace dotnetcoresample.Migrations
 {
     [DbContext(typeof(DotNetSampleDbContext))]
-    [Migration("20190227031125_AddScore")]
-    partial class AddScore
+    [Migration("20190227062639_AddAddress")]
+    partial class AddAddress
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,11 +21,14 @@ namespace dotnetcoresample.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("dotnetcore_sample.Models.Customer", b =>
+            modelBuilder.Entity("dotnetcoresample.Models.Customer", b =>
                 {
                     b.Property<string>("CustomerId")
                         .HasColumnName("CustomerID")
                         .HasMaxLength(5);
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(150);
 
                     b.Property<int?>("Age");
 

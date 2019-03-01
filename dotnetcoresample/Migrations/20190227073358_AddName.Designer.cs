@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using dotnetcore_sample;
+using dotnetcoresample;
 
 namespace dotnetcoresample.Migrations
 {
@@ -21,7 +21,7 @@ namespace dotnetcoresample.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("dotnetcore_sample.Models.Customer", b =>
+            modelBuilder.Entity("dotnetcoresample.Models.Customer", b =>
                 {
                     b.Property<string>("CustomerId")
                         .HasColumnName("CustomerID")
