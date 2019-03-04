@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace dotnetcoresample.Customers.Queries.GetCustomerDetail
 {
-    public class GetCustomerDetailQueryHandler : IRequestHandler<GetCustomerDetailQuery, CustomerDetailModel>
+    public class GetCustomerDetailQueryHandler : BaseDbRequestHandler<GetCustomerDetailQuery, CustomerDetailModel>
     {
-        private readonly DotNetSampleDbContext _context;
-
-        public GetCustomerDetailQueryHandler(DotNetSampleDbContext context)
+        public GetCustomerDetailQueryHandler(DotNetSampleDbContext context) : base(context)
         {
-            _context = context;
         }
 
-        public async Task<CustomerDetailModel> Handle(GetCustomerDetailQuery request, CancellationToken cancellationToken)
+        public override async Task<CustomerDetailModel> Handle(GetCustomerDetailQuery request, CancellationToken cancellationToken)
         {
             var entity = await _context.Customers
                 .FindAsync(request.Id);
