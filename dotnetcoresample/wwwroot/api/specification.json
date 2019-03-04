@@ -43,24 +43,32 @@
         }
       }
     },
-    "/api/Api/GetTopName": {
+    "/api/Api/GetTopName/{id}": {
       "get": {
         "tags": [
           "Api"
         ],
         "operationId": "Api_GetTopName",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/CustomerDetailModel"
-                    }
-                  ]
+                  "type": "string",
+                  "nullable": true
                 }
               }
             }

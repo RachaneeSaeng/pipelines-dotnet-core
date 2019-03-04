@@ -8,5 +8,6 @@ namespace dotnetcoresample.Customers.Queries.GetTopName
 {
     public class GetTopNameQuery : IRequest<string>
     {
+        public string Id { get; set; }
     }
 }

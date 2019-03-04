@@ -17,11 +17,12 @@ namespace dotnetcoresample.Controllers
             return Ok(await Mediator.Send(new GetCustomerDetailQuery { Id = id }));
         }
 
-        // GET api/customers/gettopname
+        // GET api/customers/gettopname/5
         [HttpGet]
-        public async Task<ActionResult<CustomerDetailModel>> GetTopName()
+        [Route("{id}")]
+        public async Task<ActionResult<string>> GetTopName(string id)
         {
-            return Ok(await Mediator.Send(new GetTopNameQuery()));
+            return Ok(await Mediator.Send(new GetTopNameQuery { Id = id }));
         }
     }
 }

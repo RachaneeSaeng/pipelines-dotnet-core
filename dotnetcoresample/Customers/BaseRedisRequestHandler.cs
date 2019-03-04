@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,23 @@ namespace dotnetcoresample.Customers
             _redisdb = redis.GetDatabase();
         }
         
-        public abstract Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken);
+        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
+        {
+            return HandleWithFallback(request, cancellationToken);
+        }
+
+        private async Task<TResponse> HandleWithFallback(TRequest request, CancellationToken cancellationToken)
+        {
+            //fetch from cache
+            var data = await GetFromCache(request, cancellationToken);
+            // check if cache exist
+            if (data != null)
+                return data;
+
+            return await GetFromDb(request, cancellationToken);   
+        }
+
+        protected abstract Task<TResponse> GetFromCache(TRequest request, CancellationToken cancellationToken);
+        protected abstract Task<TResponse> GetFromDb(TRequest request, CancellationToken cancellationToken);
     }
 }

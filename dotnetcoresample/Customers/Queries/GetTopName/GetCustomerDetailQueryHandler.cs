@@ -16,21 +16,25 @@ namespace dotnetcoresample.Customers.Queries.GetTopName
         {
         }
 
-        public override Task<string> Handle(GetTopNameQuery request, CancellationToken cancellationToken)
+        protected override async Task<string> GetFromCache(GetTopNameQuery request, CancellationToken cancellationToken)
         {
-            return GetTopName();
+            var data = await _redisdb.StringGetAsync(request.Id);
+            return data.IsNullOrEmpty ? null: JsonConvert.DeserializeObject<string>(data);
         }
 
-        private async Task<string> GetTopName()
+        //Get data and also update cache
+        protected override async Task<string> GetFromDb(GetTopNameQuery request, CancellationToken cancellationToken)
         {
-            var data = await _redisdb.StringGetAsync("TopName");
+            var entity = await _context.Customers
+                .FindAsync(request.Id);
 
-            if (data.IsNullOrEmpty)
+            if (entity == null)
             {
-                return null;
+                throw new Exception("Not found");
             }
-            return data;
-        }
+            await _redisdb.StringSetAsync(request.Id, JsonConvert.SerializeObject(entity.CompanyName));
 
+            return entity.CompanyName;
+        }
     }
 }
