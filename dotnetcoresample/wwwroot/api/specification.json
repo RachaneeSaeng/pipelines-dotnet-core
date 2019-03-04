@@ -42,6 +42,31 @@
           }
         }
       }
+    },
+    "/api/Api/GetTopName": {
+      "get": {
+        "tags": [
+          "Api"
+        ],
+        "operationId": "Api_GetTopName",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "nullable": true,
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CustomerDetailModel"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

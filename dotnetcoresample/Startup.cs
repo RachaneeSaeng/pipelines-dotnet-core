@@ -12,6 +12,7 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using dotnetcoresample.Customers.Queries.GetCustomerDetail;
 using MediatR;
+using StackExchange.Redis;
 
 namespace dotnetcoresample
 {
@@ -49,6 +50,20 @@ namespace dotnetcoresample
 
             // Add framework services.
             services.AddMvc();
+
+            //By connecting here we are making sure that our service
+            //cannot start until redis is ready. This might slow down startup,
+            //but given that there is a delay on resolving the ip address
+            //and then creating the connection it seems reasonable to move
+            //that cost to startup instead of having the first request pay the
+            //penalty.
+            services.AddSingleton<ConnectionMultiplexer>(sp =>
+            {
+                var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("RedisDb"), true);
+                configuration.ResolveDns = true;
+
+                return ConnectionMultiplexer.Connect(configuration);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
