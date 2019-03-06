@@ -18,6 +18,7 @@ namespace dotnetcoresample.IntegrationEvents.EventHandling
 
         public async Task Handle(CacheValueChangedIntegrationEvent @event)
         {
+            await Task.Run(() => 10);
             //var userIds = _repository.GetUsers();
 
             //foreach (var id in userIds)

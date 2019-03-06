@@ -139,9 +139,9 @@ namespace dotnetcoresample
 
         private void ConfigureEventBus(IApplicationBuilder app)
         {
-            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            //var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
-            eventBus.Subscribe<CacheValueChangedIntegrationEvent, CacheValueChangedIntegrationEventHandler>();
+            //eventBus.Subscribe<CacheValueChangedIntegrationEvent, CacheValueChangedIntegrationEventHandler>();
         }
     }
 }

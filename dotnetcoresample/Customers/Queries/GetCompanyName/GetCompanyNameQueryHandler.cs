@@ -7,23 +7,23 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace dotnetcoresample.Customers.Queries.GetTopName
+namespace dotnetcoresample.Customers.Queries.GetCompanyName
 {
-    public class GetTopNameQueryHandler : BaseRedisRequestHandler<GetTopNameQuery, string>
+    public class GetTopNameQueryHandler : BaseRedisRequestHandler<GetCompanyNameQuery, string>
     {
         public GetTopNameQueryHandler(DotNetSampleDbContext context, ConnectionMultiplexer redis) 
             : base(context, redis)
         {
         }
 
-        protected override async Task<string> GetFromCache(GetTopNameQuery request, CancellationToken cancellationToken)
+        protected override async Task<string> GetFromCache(GetCompanyNameQuery request, CancellationToken cancellationToken)
         {
             var data = await _redisdb.StringGetAsync(request.Id);
             return data.IsNullOrEmpty ? null: JsonConvert.DeserializeObject<string>(data);
         }
 
         //Get data and also update cache
-        protected override async Task<string> GetFromDb(GetTopNameQuery request, CancellationToken cancellationToken)
+        protected override async Task<string> GetFromDb(GetCompanyNameQuery request, CancellationToken cancellationToken)
         {
             var entity = await _context.Customers
                 .FindAsync(request.Id);

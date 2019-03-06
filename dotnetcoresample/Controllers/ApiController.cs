@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotnetcoresample.Customers.Queries.GetCustomerDetail;
-using dotnetcoresample.Customers.Queries.GetTopName;
+using dotnetcoresample.Customers.Queries.GetCompanyName;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotnetcoresample.Controllers
@@ -17,12 +17,12 @@ namespace dotnetcoresample.Controllers
             return Ok(await Mediator.Send(new GetCustomerDetailQuery { Id = id }));
         }
 
-        // GET api/customers/gettopname/5
+        // GET api/customers/getcompanyname/5
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<string>> GetTopName(string id)
+        public async Task<ActionResult<string>> GetCompanyName(string id)
         {
-            return Ok(await Mediator.Send(new GetTopNameQuery { Id = id }));
+            return Ok(await Mediator.Send(new GetCompanyNameQuery { Id = id }));
         }
     }
 }
