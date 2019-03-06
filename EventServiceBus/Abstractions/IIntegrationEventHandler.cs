@@ -6,7 +6,7 @@ namespace EventServiceBus.Abstractions
     public interface IIntegrationEventHandler<in TIntegrationEvent> : IIntegrationEventHandler 
         where TIntegrationEvent: IntegrationEvent
     {
-        Task Handle(TIntegrationEvent @event);
+        Task Handle(TIntegrationEvent @event); // strong event
     }
 
     public interface IIntegrationEventHandler

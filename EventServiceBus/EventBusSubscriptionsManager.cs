@@ -6,16 +6,14 @@ using System.Linq;
 
 namespace EventServiceBus
 {
-    public partial class InMemoryEventBusSubscriptionsManager : IEventBusSubscriptionsManager
+    public partial class EventBusSubscriptionsManager : IEventBusSubscriptionsManager
     {
-
-
         private readonly Dictionary<string, List<SubscriptionInfo>> _handlers;
         private readonly List<Type> _eventTypes;
 
         public event EventHandler<string> OnEventRemoved;
 
-        public InMemoryEventBusSubscriptionsManager()
+        public EventBusSubscriptionsManager()
         {
             _handlers = new Dictionary<string, List<SubscriptionInfo>>();
             _eventTypes = new List<Type>();
@@ -34,7 +32,7 @@ namespace EventServiceBus
             where T : IntegrationEvent
             where TH : IIntegrationEventHandler<T>
         {
-            var eventName = GetEventKey<T>();
+            var eventName = typeof(T).Name;
 
             DoAddSubscription(typeof(TH), eventName, isDynamic: false);
 
@@ -66,26 +64,23 @@ namespace EventServiceBus
                 _handlers[eventName].Add(SubscriptionInfo.Typed(handlerType));
             }
         }
-
-
+        
         public void RemoveDynamicSubscription<TH>(string eventName)
             where TH : IDynamicIntegrationEventHandler
         {
             var handlerToRemove = FindDynamicSubscriptionToRemove<TH>(eventName);
             DoRemoveHandler(eventName, handlerToRemove);
         }
-
-
+        
         public void RemoveSubscription<T, TH>()
             where TH : IIntegrationEventHandler<T>
             where T : IntegrationEvent
         {
             var handlerToRemove = FindSubscriptionToRemove<T, TH>();
-            var eventName = GetEventKey<T>();
+            var eventName = typeof(T).Name;
             DoRemoveHandler(eventName, handlerToRemove);
         }
-
-
+        
         private void DoRemoveHandler(string eventName, SubscriptionInfo subsToRemove)
         {
             if (subsToRemove != null)
@@ -107,7 +102,7 @@ namespace EventServiceBus
 
         public IEnumerable<SubscriptionInfo> GetHandlersForEvent<T>() where T : IntegrationEvent
         {
-            var key = GetEventKey<T>();
+            var key = typeof(T).Name;
             return GetHandlersForEvent(key);
         }
         public IEnumerable<SubscriptionInfo> GetHandlersForEvent(string eventName) => _handlers[eventName];
@@ -120,20 +115,18 @@ namespace EventServiceBus
                 OnEventRemoved(this, eventName);
             }
         }
-
-
+        
         private SubscriptionInfo FindDynamicSubscriptionToRemove<TH>(string eventName)
             where TH : IDynamicIntegrationEventHandler
         {
             return DoFindSubscriptionToRemove(eventName, typeof(TH));
         }
-
-
+        
         private SubscriptionInfo FindSubscriptionToRemove<T, TH>()
              where T : IntegrationEvent
              where TH : IIntegrationEventHandler<T>
         {
-            var eventName = GetEventKey<T>();
+            var eventName = typeof(T).Name;
             return DoFindSubscriptionToRemove(eventName, typeof(TH));
         }
 
@@ -150,16 +143,16 @@ namespace EventServiceBus
 
         public bool HasSubscriptionsForEvent<T>() where T : IntegrationEvent
         {
-            var key = GetEventKey<T>();
+            var key = typeof(T).Name;
             return HasSubscriptionsForEvent(key);
         }
         public bool HasSubscriptionsForEvent(string eventName) => _handlers.ContainsKey(eventName);
 
         public Type GetEventTypeByName(string eventName) => _eventTypes.SingleOrDefault(t => t.Name == eventName);
 
-        public string GetEventKey<T>()
-        {
-            return typeof(T).Name;
-        }
+        //public string GetEventKey<T>()
+        //{
+        //    return typeof(T).Name;
+        //}
     }
 }

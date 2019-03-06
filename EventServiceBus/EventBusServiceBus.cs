@@ -27,7 +27,7 @@
         {
             _serviceBusPersisterConnection = serviceBusPersisterConnection;
             _logger = logger;
-            _subsManager = subsManager ?? new InMemoryEventBusSubscriptionsManager();
+            _subsManager = subsManager ?? new EventBusSubscriptionsManager();
 
             _subscriptionClient = new SubscriptionClient(serviceBusPersisterConnection.ServiceBusConnectionStringBuilder,
                 subscriptionClientName);
