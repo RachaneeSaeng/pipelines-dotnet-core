@@ -20,6 +20,7 @@ using dotnetcoresample.IntegrationEvents.EventHandling;
 using Autofac;
 using dotnetcoresample.IntegrationEvents.Events;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc;
 
 namespace dotnetcoresample
 {
@@ -109,11 +110,11 @@ namespace dotnetcoresample
 
             app.UseStaticFiles();
 
-            //app.UseSwaggerUi3(settings =>
-            //{
-            //    settings.Path = "/api";
-            //    settings.DocumentPath = "/api/specification.json";
-            //});
+            app.UseSwaggerUi3(settings =>
+            {
+                settings.Path = "/api";
+                settings.DocumentPath = "/api/specification.json";
+            });
 
             app.UseMvc(routes =>
             {
