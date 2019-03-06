@@ -1,7 +1,11 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using dotnetcoresample.Controllers; 
+using dotnetcoresample.Controllers;
+using EventServiceBus;
+using EventServiceBus.Events;
+using dotnetcoresample.IntegrationEvents.Events;
+using dotnetcoresample.IntegrationEvents.EventHandling;
 
 namespace dotnetcoretests
 {
@@ -32,6 +36,16 @@ namespace dotnetcoretests
 
           // Assert
           Assert.AreEqual("Your contact page.", result.ViewData["Message"]);
+        }
+
+        [TestMethod]
+        public void EventBus()
+        {
+            // Arrange
+            var ebsm = new EventBusSubscriptionsManager();
+
+            // Act
+            ebsm.AddSubscription<CacheValueChangedIntegrationEvent, CacheValueChangedIntegrationEventHandler>();
         }
     }
 }
