@@ -13,6 +13,12 @@ using Microsoft.EntityFrameworkCore;
 using dotnetcoresample.Customers.Queries.GetCustomerDetail;
 using MediatR;
 using StackExchange.Redis;
+using EventServiceBus;
+using Microsoft.Azure.ServiceBus;
+using EventServiceBus.Abstractions;
+using dotnetcoresample.IntegrationEvents.EventHandling;
+using Autofac;
+using dotnetcoresample.IntegrationEvents.Events;
 
 namespace dotnetcoresample
 {
@@ -64,6 +70,18 @@ namespace dotnetcoresample
 
                 return ConnectionMultiplexer.Connect(configuration);
             });
+
+            services.AddSingleton<IServiceBusPersisterConnection>(sp =>
+            {
+                var logger = sp.GetRequiredService<ILogger<DefaultServiceBusPersisterConnection>>();
+
+                var serviceBusConnectionString = Configuration["EventBusConnection"];
+                var serviceBusConnection = new ServiceBusConnectionStringBuilder(serviceBusConnectionString);
+
+                return new DefaultServiceBusPersisterConnection(serviceBusConnection, logger);
+            });
+
+            RegisterEventBus(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,6 +114,34 @@ namespace dotnetcoresample
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            ConfigureEventBus(app);
+        }
+
+        private void RegisterEventBus(IServiceCollection services)
+        {
+            var subscriptionClientName = Configuration["SubscriptionClientName"];
+
+            services.AddSingleton<IEventBus, EventBusServiceBus>(sp =>
+            {
+                var serviceBusPersisterConnection = sp.GetRequiredService<IServiceBusPersisterConnection>();
+                var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+                var logger = sp.GetRequiredService<ILogger<EventBusServiceBus>>();
+                var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
+
+                return new EventBusServiceBus(serviceBusPersisterConnection, logger,
+                    eventBusSubcriptionsManager, subscriptionClientName, iLifetimeScope);
+            });
+
+        services.AddSingleton<IEventBusSubscriptionsManager, EventBusSubscriptionsManager>();
+
+        services.AddTransient<CacheValueChangedIntegrationEventHandler>();
+        }
+
+        private void ConfigureEventBus(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+
+            eventBus.Subscribe<CacheValueChangedIntegrationEvent, CacheValueChangedIntegrationEventHandler>();
         }
     }
 }

@@ -11,17 +11,17 @@ namespace dotnetcoresample.IntegrationEvents.Events
     // An Integration Event is an event that can cause side effects to other microsrvices, Bounded-Contexts or external systems.
     public class CacheValueChangedIntegrationEvent : IntegrationEvent
     {
-        public int ProductId { get; private set; }
+        public string Key { get; private set; }
 
-        public decimal NewPrice { get; private set; }
+        public string OldValue { get; private set; }
 
-        public decimal OldPrice { get; private set; }
+        public string NewValue { get; private set; }
 
-        public CacheValueChangedIntegrationEvent(int productId, decimal newPrice, decimal oldPrice)
+        public CacheValueChangedIntegrationEvent(string key, string oldValue, string newValue)
         {
-            ProductId = productId;
-            NewPrice = newPrice;
-            OldPrice = oldPrice;
+            Key = key;
+            OldValue = oldValue;
+            NewValue = newValue;
         }
     }
 }

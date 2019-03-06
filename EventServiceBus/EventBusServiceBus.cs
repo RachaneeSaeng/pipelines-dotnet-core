@@ -37,32 +37,6 @@
             RegisterSubscriptionClientMessageHandler();
         }
 
-        public void Publish(IntegrationEvent @event)
-        {
-            var eventName = @event.GetType().Name.Replace(INTEGRATION_EVENT_SUFIX, "");
-            var jsonMessage = JsonConvert.SerializeObject(@event);
-            var body = Encoding.UTF8.GetBytes(jsonMessage);
-
-            var message = new Message
-            {
-                MessageId = Guid.NewGuid().ToString(),
-                Body = body,
-                Label = eventName,
-            };
-
-            var topicClient = _serviceBusPersisterConnection.CreateModel();
-
-            topicClient.SendAsync(message)
-                .GetAwaiter()
-                .GetResult();
-        }
-
-        public void SubscribeDynamic<TH>(string eventName)
-            where TH : IDynamicIntegrationEventHandler
-        {
-            _subsManager.AddDynamicSubscription<TH>(eventName);
-        }
-
         public void Subscribe<T, TH>()
             where T : IntegrationEvent
             where TH : IIntegrationEventHandler<T>
@@ -88,7 +62,13 @@
 
             _subsManager.AddSubscription<T, TH>();
         }
-
+        
+        public void SubscribeDynamic<TH>(string eventName)
+            where TH : IDynamicIntegrationEventHandler
+        {
+            _subsManager.AddDynamicSubscription<TH>(eventName);
+        }
+        
         public void Unsubscribe<T, TH>()
             where T : IntegrationEvent
             where TH : IIntegrationEventHandler<T>
@@ -115,11 +95,32 @@
         {
             _subsManager.RemoveDynamicSubscription<TH>(eventName);
         }
+        
+        public void Publish(IntegrationEvent @event)
+        {
+            var eventName = @event.GetType().Name.Replace(INTEGRATION_EVENT_SUFIX, "");
+            var jsonMessage = JsonConvert.SerializeObject(@event);
+            var body = Encoding.UTF8.GetBytes(jsonMessage);
 
+            var message = new Message
+            {
+                MessageId = Guid.NewGuid().ToString(),
+                Body = body,
+                Label = eventName,
+            };
+
+            var topicClient = _serviceBusPersisterConnection.CreateModel();
+
+            topicClient.SendAsync(message)
+                .GetAwaiter()
+                .GetResult();
+        }
+        
         public void Dispose()
         {
             _subsManager.Clear();
         }
+
 
         private void RegisterSubscriptionClientMessageHandler()
         {
