@@ -27,11 +27,6 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.0" />
-    <PackageReference Include="NSwag.AspNetCore" Version="12.0.14" />
-    <PackageReference Include="NSwag.MSBuild" Version="12.0.14">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="StackExchange.Redis" Version="2.0.519" />
   </ItemGroup>
   <ItemGroup>
@@ -47,11 +42,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventServiceBus\EventServiceBus.csproj" />
-  </ItemGroup>
-  
-    <Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
-    <Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
-    <Exec Command="$(NSwagExe_Core22) run /variables:Configuration=$(Configuration)" />
-    <RemoveDir Directories="$(OutDir)References" />
-  </Target>
+  </ItemGroup>      
 </Project>
