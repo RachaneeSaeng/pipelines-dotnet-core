@@ -19,6 +19,7 @@ using EventServiceBus.Abstractions;
 using dotnetcoresample.IntegrationEvents.EventHandling;
 using Autofac;
 using dotnetcoresample.IntegrationEvents.Events;
+using Autofac.Extensions.DependencyInjection;
 
 namespace dotnetcoresample
 {
@@ -45,7 +46,7 @@ namespace dotnetcoresample
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             var x = typeof(GetCustomerDetailQueryHandler).GetTypeInfo().Assembly;
             services.AddMediatR(typeof(GetCustomerDetailQueryHandler).GetTypeInfo().Assembly);
@@ -82,6 +83,12 @@ namespace dotnetcoresample
             });
 
             RegisterEventBus(services);
+
+            //Autofac
+            var container = new ContainerBuilder();
+            container.Populate(services);
+
+            return new AutofacServiceProvider(container.Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
