@@ -196,6 +196,10 @@
             {
                 _logger.LogInformation($"The messaging entity { RuleDescription.DefaultRuleName } Could not be found.");
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "RemoveDefaultRule");
+            }
         }
     }
 }
