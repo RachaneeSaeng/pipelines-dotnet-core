@@ -53,14 +53,10 @@
                         Filter = new CorrelationFilter { Label = eventName },
                         Name = eventName
                     }).GetAwaiter().GetResult();
-                }
-                catch (ServiceBusException ex)
-                {
-                    _logger.LogError(ex, eventName);
-                }
+                }               
                 catch (Exception ex)
                 {
-
+                    _logger.LogError(ex, eventName);
                 }
             }
 
@@ -89,6 +85,10 @@
             catch (MessagingEntityNotFoundException)
             {
                 _logger.LogInformation($"The messaging entity {eventName} Could not be found.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, eventName);
             }
 
             _subsManager.RemoveSubscription<T, TH>();
