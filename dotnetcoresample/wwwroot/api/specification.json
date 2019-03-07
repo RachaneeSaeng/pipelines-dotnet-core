@@ -5,6 +5,12 @@
     "title": "Dotnet Sample API",
     "version": "1.0.0"
   },
+  "consumes": [
+    "application/json-patch+json",
+    "application/json",
+    "text/json",
+    "application/*+json"
+  ],
   "paths": {
     "/api/Api/Get/{id}": {
       "get": {
@@ -75,6 +81,31 @@
           }
         }
       }
+    },
+    "/api/Api/Update": {
+      "put": {
+        "tags": [
+          "Api"
+        ],
+        "operationId": "Api_Update",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
     }
   },
   "components": {
@@ -114,6 +145,20 @@
             "nullable": true
           },
           "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateCustomerCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyName": {
             "type": "string",
             "nullable": true
           }

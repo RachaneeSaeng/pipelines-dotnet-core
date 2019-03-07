@@ -44,9 +44,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Customers\Commands\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\EventServiceBus\EventServiceBus.csproj" />
   </ItemGroup>  
 

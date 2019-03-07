@@ -54,9 +54,13 @@
                         Name = eventName
                     }).GetAwaiter().GetResult();
                 }
-                catch (ServiceBusException)
+                catch (ServiceBusException ex)
                 {
-                    _logger.LogInformation($"The messaging entity {eventName} already exists.");
+                    _logger.LogError(ex, eventName);
+                }
+                catch (Exception ex)
+                {
+
                 }
             }
 
@@ -98,22 +102,29 @@
         
         public void Publish(IntegrationEvent @event)
         {
-            var eventName = @event.GetType().Name.Replace(INTEGRATION_EVENT_SUFIX, "");
-            var jsonMessage = JsonConvert.SerializeObject(@event);
-            var body = Encoding.UTF8.GetBytes(jsonMessage);
-
-            var message = new Message
+            try
             {
-                MessageId = Guid.NewGuid().ToString(),
-                Body = body,
-                Label = eventName,
-            };
+                var eventName = @event.GetType().Name.Replace(INTEGRATION_EVENT_SUFIX, "");
+                var jsonMessage = JsonConvert.SerializeObject(@event);
+                var body = Encoding.UTF8.GetBytes(jsonMessage);
 
-            var topicClient = _serviceBusPersisterConnection.CreateModel();
+                var message = new Message
+                {
+                    MessageId = Guid.NewGuid().ToString(),
+                    Body = body,
+                    Label = eventName,
+                };
 
-            topicClient.SendAsync(message)
-                .GetAwaiter()
-                .GetResult();
+                var topicClient = _serviceBusPersisterConnection.CreateModel();
+
+                topicClient.SendAsync(message)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Publish to service bus");
+            }
         }
         
         public void Dispose()

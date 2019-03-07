@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace dotnetcoresample.Customers.Queries.GetCompanyName
 {
-    public class GetTopNameQueryHandler : BaseRedisRequestHandler<GetCompanyNameQuery, string>
+    public class GetCompanyNameQueryHandler : BaseRedisQueryHandler<GetCompanyNameQuery, string>
     {
-        public GetTopNameQueryHandler(DotNetSampleDbContext context, ConnectionMultiplexer redis) 
+        public GetCompanyNameQueryHandler(DotNetSampleDbContext context, ConnectionMultiplexer redis) 
             : base(context, redis)
         {
         }

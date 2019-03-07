@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace dotnetcoresample.Customers
 {
-    public abstract class BaseRedisRequestHandler<TRequest, TResponse> 
+    public abstract class BaseRedisRequestHandler<TRequest, TResponse>
         : IRequestHandler<TRequest, TResponse>
-        where TRequest: IRequest<TResponse>
+        where TRequest : IRequest<TResponse>
     {
         protected readonly DotNetSampleDbContext _context;
         private readonly ConnectionMultiplexer _redis;
@@ -23,24 +23,7 @@ namespace dotnetcoresample.Customers
             _redis = redis;
             _redisdb = redis.GetDatabase();
         }
-        
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
-        {
-            return HandleWithFallback(request, cancellationToken);
-        }
 
-        private async Task<TResponse> HandleWithFallback(TRequest request, CancellationToken cancellationToken)
-        {
-            //fetch from cache
-            var data = await GetFromCache(request, cancellationToken);
-            // check if cache exist
-            if (data != null)
-                return data;
-
-            return await GetFromDb(request, cancellationToken);   
-        }
-
-        protected abstract Task<TResponse> GetFromCache(TRequest request, CancellationToken cancellationToken);
-        protected abstract Task<TResponse> GetFromDb(TRequest request, CancellationToken cancellationToken);
+        public abstract Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken);
     }
 }
