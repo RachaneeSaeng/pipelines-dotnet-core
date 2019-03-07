@@ -1,5 +1,7 @@
 ﻿using dotnetcoresample.IntegrationEvents.Events;
 using EventServiceBus.Abstractions;
+using Newtonsoft.Json;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,44 +11,19 @@ namespace dotnetcoresample.IntegrationEvents.EventHandling
 {
     public class CacheValueChangedIntegrationEventHandler : IIntegrationEventHandler<CacheValueChangedIntegrationEvent>
     {
-        ///private readonly IBasketRepository _repository;
+        private readonly ConnectionMultiplexer _redis;
+        protected readonly IDatabase _redisdb;
 
-        public CacheValueChangedIntegrationEventHandler()
+        public CacheValueChangedIntegrationEventHandler(ConnectionMultiplexer redis)
         {
-            //_repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _redis = redis;
+            _redisdb = redis.GetDatabase();
         }
 
         public async Task Handle(CacheValueChangedIntegrationEvent @event)
         {
-            await Task.Run(() => 10);
-            //var userIds = _repository.GetUsers();
-
-            //foreach (var id in userIds)
-            //{
-            //    var basket = await _repository.GetBasketAsync(id);
-
-            //    await UpdatePriceInBasketItems(@event.ProductId, @event.NewPrice, @event.OldPrice, basket);
-            //}
+            await _redisdb.StringSetAsync(@event.Key, JsonConvert.SerializeObject(@event.NewValue));
         }
 
-        //private async Task UpdatePriceInBasketItems(int productId, decimal newPrice, decimal oldPrice, CustomerBasket basket)
-        //{
-        //    string match = productId.ToString();
-        //    var itemsToUpdate = basket?.Items?.Where(x => x.ProductId == match).ToList();
-
-        //    if (itemsToUpdate != null)
-        //    {
-        //        foreach (var item in itemsToUpdate)
-        //        {
-        //            if (item.UnitPrice == oldPrice)
-        //            {
-        //                var originalPrice = item.UnitPrice;
-        //                item.UnitPrice = newPrice;
-        //                item.OldUnitPrice = originalPrice;
-        //            }
-        //        }
-        //        await _repository.UpdateBasketAsync(basket);
-        //    }
-        //}
     }
 }
