@@ -1,11 +1,8 @@
 ﻿using MediatR;
 using System;
 using System.Collections.Generic;
-using MediatR;
 using Newtonsoft.Json;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
