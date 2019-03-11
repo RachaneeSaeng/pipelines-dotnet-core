@@ -18,8 +18,12 @@ spec:
     metadata:
       labels:
         app: {{.Chart.Name}}
-    spec:
+    spec:	 
       containers:
+        - name: redisdb
+          image: redis
+          ports:
+            - containerPort: 6379
         - name: {{.Chart.Name}}
           image: zzplezz/{{.Chart.Name}}:{{.Chart.Version}}-{{.Values.buildId}}
           ports:
