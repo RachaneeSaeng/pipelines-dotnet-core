@@ -1,3 +1,5 @@
 # buildId is used as dockker image tag
 buildId: BUILDID
 buildNumber: 'BUILDNUMBER'
+applicationInsights:
+  InstrumentationKey: VALUE_TO_BE_OVERRIDDEN

@@ -23,4 +23,7 @@ spec:
       - name: {{.Chart.Name}}
         image: zzplezz/{{.Chart.Name}}:{{.Chart.Version}}-{{.Values.buildId}}
         ports:
-        - containerPort: 80
+			- containerPort: 80
+		env:
+            - name: APPINSIGHTS_INSTRUMENTATIONKEY
+              value: {{ .Values.applicationInsights.InstrumentationKey }}
