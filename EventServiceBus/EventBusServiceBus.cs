@@ -22,7 +22,7 @@
         private const string INTEGRATION_EVENT_SUFIX = "IntegrationEvent";
 
         public EventBusServiceBus(IServiceBusPersisterConnection serviceBusPersisterConnection,
-            ILogger<EventBusServiceBus> logger, IEventBusSubscriptionsManager subsManager, string subscriptionClientName,
+            ILogger<EventBusServiceBus> logger, IEventBusSubscriptionsManager subsManager, string subscriptionName,
             ILifetimeScope autofac)
         {
             _serviceBusPersisterConnection = serviceBusPersisterConnection;
@@ -30,7 +30,7 @@
             _subsManager = subsManager ?? new EventBusSubscriptionsManager();
 
             _subscriptionClient = new SubscriptionClient(serviceBusPersisterConnection.ServiceBusConnectionStringBuilder,
-                subscriptionClientName);
+                subscriptionName);
             _autofac = autofac;
 
             RemoveDefaultRule();
@@ -53,6 +53,7 @@
                         Filter = new CorrelationFilter { Label = eventName },
                         Name = eventName
                     }).GetAwaiter().GetResult();
+                    _logger.LogInformation($"Subscribed from {Environment.MachineName}");
                 }               
                 catch (Exception ex)
                 {
@@ -120,6 +121,8 @@
                 topicClient.SendAsync(message)
                     .GetAwaiter()
                     .GetResult();
+
+                _logger.LogInformation($"Published from {Environment.MachineName}");
             }
             catch (Exception ex)
             {

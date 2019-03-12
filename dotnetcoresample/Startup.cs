@@ -54,7 +54,7 @@ namespace dotnetcoresample
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<DotNetSampleDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MyFirstAzureDatabase")));
+                options.UseSqlServer(Configuration.GetConnectionString("AzureDatabase")));
 
             // Add framework services.
             services.AddMvc();
@@ -127,7 +127,7 @@ namespace dotnetcoresample
 
         private void RegisterEventBus(IServiceCollection services)
         {
-            var subscriptionClientName = Configuration["SubscriptionClientName"];
+            var subscriptionName = Configuration["SubscriptionName"];
 
             services.AddSingleton<IEventBus, EventBusServiceBus>(sp =>
             {
@@ -137,7 +137,7 @@ namespace dotnetcoresample
                 var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
 
                 return new EventBusServiceBus(serviceBusPersisterConnection, logger,
-                    eventBusSubcriptionsManager, subscriptionClientName, iLifetimeScope);
+                    eventBusSubcriptionsManager, subscriptionName, iLifetimeScope);
             });
 
         services.AddSingleton<IEventBusSubscriptionsManager, EventBusSubscriptionsManager>();
